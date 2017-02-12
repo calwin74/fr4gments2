@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>test5</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="http://code.jquery.com/ui/1.8.21/themes/base/jquery-ui.css" rel="stylesheet">
+    <link href="http://code.jquery.com/ui/1.8.21/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+    <style>body { background:#fff; font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; }</style>
+
+    <script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-ui-1.8.13.custom.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <!--
+    <script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="https://raw.github.com/furf/jquery-ui-touch-punch/master/jquery.ui.touch-punch.min.js"></script>
+    -->
+    <style>
+        #view_port { position:absolute; width: 400px; height: 400px; padding: 0.5em; overflow:hidden; background-color: #666; }
+        #draggable { width: 1200px; height: 1200px; padding: 0.5em; }
+        #map1      { position:absolute; 1200px; height: 1200px; padding: 0.5em; top:-21px; left-21px}
+        #map2      { position:absolute; 1200px; height: 1200px; padding: 0.5em; top:-21px; left-21px;z-index:1}
+	#tile1     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile2     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile3     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile4     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile5     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile6     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile7     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile8     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile9     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile10    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile11     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile12     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile13     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile14     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile15     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile16     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile17     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile18     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile19     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile20    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile21     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile22     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile23     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile24     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile25     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile26     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile27     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile28     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile29     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile30    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile31     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile32     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile33     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile34     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile35     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile36     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile37     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile38     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile39     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile40    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile41     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile42     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile43     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile44     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile45     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile46     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile47     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile48     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile49     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile50    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile51     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile52     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile53     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile54     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile55     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile56     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile57     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile58     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile59     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile60    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+        #tile61     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile62     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile63     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile64     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile65     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile66     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile67     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile68     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile69     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile70    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+        #tile71     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile72     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile73     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile74     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile75     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile76     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile77     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile78     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile79     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile80    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+        #tile81     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile82     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile83     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile84     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile85     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile86     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile87     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile88     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile89     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile90    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+        #tile91     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile92     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile93     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile94     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile95     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile96     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile97     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile98     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile99     { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+	#tile100    { width: 50px; height: 50px; padding: 0.5em; background-color: #666;}
+
+    </style>
+  </head>
+  <body>
+
+    <div id="view_port">
+      
+        <script>
+        $(function() {
+          $( "#draggable" ).draggable();
+          $( ".tile" ).click(function() {
+	    alert("click");
+	  });
+        });
+        </script>
+
+        <div id="draggable" class="ui-widget-content">
+          <p>Div and relations as fr4gments. 4 map divs</p>
+
+          <div id="map1">
+
+	  <span id="tile1" class="tile"></span><span id="tile2" class="tile"></span><span id="tile3" class="tile"></span><span id="tile4" class="tile"></span><span id="tile5" class="tile"></span><span id="tile6" class="tile"></span><span id="tile7" class="tile"></span><span id="tile8" class="tile"></span><span id="tile9" class="tile"></span><span id="tile10" class="tile"></span>
+          <span id="tile11" class="tile"></span><span id="tile12" class="tile"></span><span id="tile13" class="tile"></span><span id="tile14" class="tile"></span><span id="tile15" class="tile"></span><span id="tile16" class="tile"></span><span id="tile17" class="tile"></span><span id="tile18" class="tile"></span><span id="tile19" class="tile"></span><span id="tile20" class="tile"></span>
+          <span id="tile21" class="tile"></span><span id="tile22" class="tile"></span><span id="tile23" class="tile"></span><span id="tile24" class="tile"></span><span id="tile25" class="tile"></span><span id="tile26" class="tile"></span><span id="tile27" class="tile"></span><span id="tile28" class="tile"></span><span id="tile29" class="tile"></span><span id="tile30" class="tile"></span>
+          <span id="tile31" class="tile"></span><span id="tile32" class="tile"></span><span id="tile3" class="tile"></span><span id="tile34" class="tile"></span><span id="tile35" class="tile"></span><span id="tile36" class="tile"></span><span id="tile37" class="tile"></span><span id="tile38" class="tile"></span><span id="tile39" class="tile"></span><span id="tile40" class="tile"></span>
+          <span id="tile41" class="tile"></span><span id="tile42" class="tile"></span><span id="tile43" class="tile"></span><span id="tile44" class="tile"></span><span id="tile45" class="tile"></span><span id="tile46" class="tile"></span><span id="tile47" class="tile"></span><span id="tile48" class="tile"></span><span id="tile49" class="tile"></span><span id="tile50" class="tile"></span>
+          <span id="tile51" class="tile"></span><span id="tile52" class="tile"></span><span id="tile53" class="tile"></span><span id="tile54" class="tile"></span><span id="tile55" class="tile"></span><span id="tile56" class="tile"></span><span id="tile57" class="tile"></span><span id="tile58" class="tile"></span><span id="tile59" class="tile"></span><span id="tile60" class="tile"></span>
+          <span id="tile71" class="tile"></span><span id="tile72" class="tile"></span><span id="tile73" class="tile"></span><span id="tile74" class="tile"></span><span id="tile75" class="tile"></span><span id="tile76" class="tile"></span><span id="tile77" class="tile"></span><span id="tile78" class="tile"></span><span id="tile79" class="tile"></span><span id="tile80" class="tile"></span>
+          <span id="tile81" class="tile"></span><span id="tile82" class="tile"></span><span id="tile83" class="tile"></span><span id="tile84" class="tile"></span><span id="tile85" class="tile"></span><span id="tile86" class="tile"></span><span id="tile87" class="tile"></span><span id="tile88" class="tile"></span><span id="tile89" class="tile"></span><span id="tile90" class="tile"></span>
+          <span id="tile91" class="tile"></span><span id="tile92" class="tile"></span><span id="tile93" class="tile"></span><span id="tile94" class="tile"></span><span id="tile95" class="tile"></span><span id="tile96" class="tile"></span><span id="tile97" class="tile"></span><span id="tile98" class="tile"></span><span id="tile99" class="tile"></span><span id="tile100" class="tile"></span>
+
+         </div>
+
+        </div>
+          
+    </div>
+
+    </body>
+</html>

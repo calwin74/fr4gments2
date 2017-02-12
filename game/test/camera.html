@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head style="height:100%">
+    <title>Camera test</title>
+    <meta name="Author" content="Mattias"/>
+    <meta name="description" content="Camera test using canvas."/>
+
+    <script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-ui-1.8.13.custom.min.js" type="text/javascript"></script>
+
+    <script src="./camera_site.js" type="text/javascript"></script>
+    <!-- zzz Get this to work
+    <script src=".SOCKET_IO."></script>
+    <script src="/socket.io/socket.io.js"></script>
+    -->
+    <script src="http://localhost:8079/socket.io/socket.io.js"></script>
+
+    <script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+  </head>
+
+  <body>
+    <div id="canvasContainer" style="position:relative;overflow:hidden;">
+      <canvas id="gameCanvas">
+      HexGrid. Get a html5 capable browser!
+      </canvas>
+    </div>
+
+    <script src="./camera.js" type="text/javascript"></script>
+  </body>
+
+</html>

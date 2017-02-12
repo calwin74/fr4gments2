@@ -1,0 +1,10 @@
+/*
+ * Functions used by the map representation. Using JQuery plugins.
+ */
+
+$(function() {
+  $( "#map_container" ).draggable();
+    $( ".tile" ).click(function() {
+      alert("clicked tile");
+    });
+});

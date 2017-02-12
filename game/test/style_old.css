@@ -1,0 +1,109 @@
+@charset "utf-8";
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background-color: black;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: x-small;
+	color: #0F0;
+	text-align: left;
+}
+
+div#container {
+	/* position:relative; */
+	height: 100%;
+	width: 100%;
+	max-width: 4000px;
+	min-width: 768px;
+	max-height: 4000px;
+	min-height: 380px;      
+	overflow:hidden;
+}
+
+div#map_container {
+	/* position:absolute; */
+        height: 4000px;
+	width: 4000px;
+	/*
+	height: 100%;
+	width: 100%;
+	*/
+	/*
+	max-width: 2920px;
+	min-width: 1768px;
+	max-height: 2300px;
+	min-height: 1380px;
+	*/
+	/* overflow:hidden; */
+}
+
+#map1 {
+	position:absolute;
+	top:-21px;
+	left:-21px;
+	height: 4000px;
+	width: 4000px;
+	margin:0 auto;
+	z-index:0;
+	border:0px solid #000;
+	overflow:hidden;
+	background-color: #666;
+}
+
+#map2 {
+	position:absolute;
+	top:-21px;
+	left:-21px;
+	height: 4000px;
+	width: 4000px;
+	margin:0 auto;
+	z-index:1;
+	border:0px solid #000;
+	overflow:hidden;
+}
+
+.tile { 
+        width: 50px;
+        height: 50px;
+        padding: 0.5em;
+        background-color: #677;
+}
+
+.br {
+clear:both;
+}
+
+.firstodd {
+margin:-24px 0 0 52px;
+}
+
+.odd {
+margin:-27px 0 0 33px;
+}
+
+.even {
+margin:-27px 33px 0 0;
+}
+
+.hex {
+float:left;
+width:70px;
+height:49px;
+margin:0 20px 0 0;
+background: url(marked_black.png) no-repeat;
+}
+
+.front {
+float:left;
+width:70px;
+height:49px;
+margin:0 20px 0 0;
+background: url(transparent.png) no-repeat;
+}
+

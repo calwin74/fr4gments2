@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head style="height:100%">
+    <title>Camera test</title>
+    <meta name="Author" content="Mattias"/>
+    <meta name="description" content="Camera test using canvas."/>
+
+    <script src="../js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="../js/jquery-ui-1.8.13.custom.min.js" type="text/javascript"></script>
+    <script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript">
+function MM_showHideLayers() { //v9.0
+  var i,p,v,obj,args=MM_showHideLayers.arguments;
+  for (i=0; i<(args.length-2); i+=3) 
+  with (document) if (getElementById && ((obj=getElementById(args[i]))!=null)) { v=args[i+2];
+    if (obj.style) { obj=obj.style; v=(v=='show')?'visible':(v=='hide')?'hidden':v; }
+    obj.visibility=v; }
+}
+    </script>
+    <script type="text/javascript">
+      // Name and Email validation Function.
+      function validation(user, password) {
+        //var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        if (user === '' || password === '') {
+          alert("Please fill all fields...!!!!!!");
+          return false;
+        }
+        /*
+        else if (!(email).match(emailReg)) {
+          alert("Invalid Email...!!!!!!");
+          return false;
+        } else {
+        */
+        return true;
+        //}
+      }
+
+      function submit_func() {
+        var user = document.getElementById("Username").value;
+        var password = document.getElementById("Password").value;
+        if (validation(user, password)) {
+          alert(" Username : " + user + " \n Password : " + password);
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+
+    <div id="canvasContainer" style="position:relative;overflow:hidden;">
+      <!-- 1920 947 -->
+      
+      <canvas id="gameCanvas" width="2020" height="2020">undefined</canvas>
+    </div>
+
+  <div id="infotab" class="transpwind">
+    <table width="100%" border="0">
+      <tbody>
+        <tr style="font-size: x-large">
+          <td>Menu <br>
+          :::<br></td>
+          <td> Manpower<br>
+          20/100</td>
+          <td>Army<br>
+          13/100 </td>
+          <td>Citizens<br>
+          67/100 </td>
+          <td>Resources<br>
+          163 </td>
+          <td>Upkeep<br>
+          -25 </td>
+        </tr>
+      </tbody>
+    </table> 
+  </div>
+
+  <div id="login" class="transpwind" style="text-align: center; font-size:x-large">
+LOGIN
+  <table width="100%" border="0">
+  <tbody>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td><p>
+        <label for="username">Username:</label>
+        <input type="text" name="Username" id="Username">
+        <label for="Password">Password:</label>
+        <input type="password" name="Password" id="Password">
+        <input type="button" name="Login" id="Login" value="Login" onclick="submit_func()"/>
+      </p></td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+  </tbody>
+  </table>
+  
+  </div>
+
+  <div id="bottomcontainer" width="100">
+    	
+    <div id="cityhall" class="transpwind"><table width="95%" border="0">
+  <caption style="font-size: xx-large; font-style: normal; font-weight: 900;">
+CITY HALL
+  </caption>
+  <tbody>
+    <tr>      </tr>
+  </tbody>
+    </table>
+<table width="95%" border="0">
+      <tbody>
+          <tr>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/engineer2.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','inherit','Construct','','hide','cityhallbuild','','hide')"><br>Engineer<br>100/0<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/concreteh_com.png" width="110" height="110"><br>Concrete<br>100/25<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/buildbuildings.png" width="157" height="110" onClick="MM_showHideLayers('cityhall','','hide','Construct','','show','cityhallbuild','','hide')"><br>
+            Construct<br>buildings<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','hide','barrack','','show')"><br>
+            #<br>Barrack<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','hide','Factory1','','show')"><br>#<br>Factory 1<br></td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+    
+    <div id="Construct" class="transpwind"><table width="95%" border="0">
+  <caption style="font-size: xx-large; font-style: normal; font-weight: 900;">
+CONSTRUCT
+  </caption>
+  <tbody>
+    <tr>      </tr>
+  </tbody>
+    </table>
+<table width="95%" border="0">
+      <tbody>
+          <tr>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/factoryh_com.png" width="110" height="110"><br>Factory<br>150/50<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/barrackh_com.png" width="110" height="110"><br>Barrack<br>125/25<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/bunkerh_com.png" width="110" height="110"><br>
+            Bunker<br>25/25<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/refineryh_com.png" width="110" height="110"><br>Refinery<br>150/100<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/moveh_com.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','show','Construct','','hide')"><br>
+            Go<br>back<br></td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+    
+    <div id="Factory1" class="transpwind"><table width="95%" border="0">
+  <caption style="font-size: xx-large; font-style: normal; font-weight: 900;">
+FACTORY 1
+  </caption>
+  <tbody>
+    <tr>      </tr>
+  </tbody>
+    </table>
+<table width="95%" border="0">
+      <tbody>
+          <tr>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/factory_addon_com.png" width="110" height="110"><br>
+            Build<br>addon<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/factory_addon_com.png" width="110" height="110"><br>
+            Build<br>addon<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/moveh_com.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','show','Factory1','','hide')"><br>
+            Go<br>back<br></td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+    
+    <div id="cityhallbuild" class="transpwind"><table width="95%" border="0">
+  <caption style="font-size: xx-large; font-weight: 900;">
+BUILD
+  </caption>
+  <tbody>
+    <tr>      </tr>
+  </tbody>
+    </table>
+<table width="95%" border="0" align="center">
+      <tbody>
+          <tr>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/engineer2.png" alt="" width="110" height="110" onClick="MM_showHideLayers('cityhall','','show','cityhallbuild','','hide')"/><br>
+            Engineer</td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/bunkerh_com.png" width="110" height="110" alt=""/><br>
+            Bunker</td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/bunkerh_com.png" width="110" height="110" alt=""/><br>
+            Bunker2</td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/cityhallh_com.png" width="110" height="110" alt=""/><br>
+            City Hall</td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/factory_addon_com.png" width="110" height="110" alt=""/><br>
+            AddOn</td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/factoryh_com.png" width="110" height="110"><br>
+            Factory</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div id="barrack" class="transpwind"><table width="95%" border="0">
+  <caption style="font-size: xx-large; font-style: normal; font-weight: 900;">
+BARRACK
+  </caption>
+  <tbody>
+    <tr>      </tr>
+  </tbody>
+    </table>
+<table width="95%" border="0">
+      <tbody>
+          <tr>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/soldierh_com.png" width="110" height="110"><br>&nbsp;<br>Soldier<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/artillery2.png" width="110" height="110"><br>
+             <br>Artillery<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/na.png" width="110" height="110"><br>Not<br>available<br></td>
+            <td align="center" valign="bottom" style="font-size: x-large"><img src="../img/moveh_com.png" width="110" height="110" onClick="MM_showHideLayers('cityhall','','show','barrack','','hide')"><br>
+            Go<br>back<br></td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+  </div>
+
+    <script src="./camera.js" type="text/javascript"></script>
+  </body>
+
+</html>
