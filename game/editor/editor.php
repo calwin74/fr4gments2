@@ -28,7 +28,7 @@ $html = new Html;
     <script src="http://fr4gments.com:8079/socket.io/socket.io.js"></script>
     <script src="http://localhost:8079/socket.io/socket.io.js"></script>
     -->
-    <script src="../js/taffy-min.js" type="text/javascript"></script>
+    
     <script src="../js/jquery.ui.touch-punch.min.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="./style.css">
   </head>

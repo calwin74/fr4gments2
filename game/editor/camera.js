@@ -214,6 +214,62 @@ var bottomContext;
 	//this.image = null;
     }
 
+    function drawHex(c, x0, y0, fColor, text, terrain, marked)
+    {
+	var image;
+
+	/*
+	if (tile.construct === 1)
+	{
+	    image = imgMap['concrete'];
+	}
+	else if (tile.building)
+	{
+	    image = imgMap[tile.building];
+	}
+	else
+	{
+	    var str = terrainFromType(tile.type);
+	    image = imgMap[str];
+	}
+	*/
+	var str = terrainFromType(terrain);
+	//zzz cache with a numeric key?
+	image = imgMap[str];
+
+	c.drawImage(image, x0, y0 - y_offset, size, size);
+
+	/*
+	if (tile.unit)
+	{
+	    unitImage = imgMap[tile.unit];
+	    //zzz Fix this later.
+	    c.drawImage(unitImage, x0 + 50, y0 - y_offset + 50, 100, 100);
+	}
+	*/
+	if (text)
+	{
+	    c.font = "20px sans-serif";
+	    c.fillStyle = fColor;
+	    c.fillText(text, x0 + hexagon.h/2, y0 + hexagon.r);
+	}
+
+	if (marked)
+	{
+	    //Start in upper left corner.
+	    c.strokeStyle = 'yellow';
+	    c.beginPath();
+	    c.moveTo(x0 + hexagon.h, y0);
+	    c.lineTo(x0 + hexagon.s + hexagon.h, y0 + 1);
+	    c.lineTo(x0 + hexagon.s + 2 * hexagon.h, y0 + hexagon.r);
+	    c.lineTo(x0 + hexagon.s + hexagon.h, y0 + 2 * hexagon.r);
+	    c.lineTo(x0 + hexagon.h, y0 + 2 * hexagon.r);
+	    c.lineTo(x0, y0 + hexagon.r);
+	    c.stroke();
+	    c.closePath();
+	}
+    }
+    /*
     function drawHex(c, x0, y0, fColor, text, tile, marked)
     {
 	var image;
@@ -263,7 +319,19 @@ var bottomContext;
 	    c.closePath();
 	}
     }
-
+    */
+    function isMarked(x, y, world_stats)
+    {
+	if (x == world_stats.x_marked && y == world_stats.y_marked)
+	{
+	    return 1;
+	}
+	else
+	{
+	    return 0;
+	}
+    }
+    /*
     function isMarked(tile, world_stats)
     {
 	if (tile.x == world_stats.x_marked && tile.y == world_stats.y_marked)
@@ -275,6 +343,7 @@ var bottomContext;
 	    return 0;
 	}
     }
+    */
 
     function drawHexGrid(ctx, world_stats)
     {
@@ -297,20 +366,24 @@ var bottomContext;
 	{
 	    for (var col = 0; col < columns; col = col + 2) 
 	    {
-		var tile = cacheGetItem(col + world_stats.x_coord, row + world_stats.y_coord);
+		var x = col + world_stats.x_coord;
+		var y = row + world_stats.y_coord;
+		var terrain = cacheGetItem(x, y);
 		posy = row * 2 * hexagon.r;
 		posx = col * (hexagon.s + hexagon.h);
-		coord = "(" + tile.x + "," + tile.y + ")";
-		drawHex(ctx, posx , posy, "red", coord, tile, isMarked(tile, world_stats));
+		coord = "(" + x + "," + y + ")";
+		drawHex(ctx, posx , posy, "red", coord, terrain, isMarked(x, y, world_stats));
 	    }
 
 	    for (var col = 1; col < columns; col = col + 2) 
 	    {
-		var tile = cacheGetItem(col + world_stats.x_coord, row + world_stats.y_coord + mod);
+		var x = col + world_stats.x_coord;
+		var y = row + world_stats.y_coord + mod;
+		var terrain = cacheGetItem(x, y);
 		posy = hexagon.r + row * 2 * hexagon.r;
 		posx = col * (hexagon.s + hexagon.h);
-		coord = "(" + tile.x + "," + tile.y + ")";
-		drawHex(ctx, posx , posy, "red", coord, tile, isMarked(tile, world_stats));
+		coord = "(" + x + "," + y + ")";
+		drawHex(ctx, posx , posy, "red", coord, terrain, isMarked(x, y, world_stats));
 	    }
 	}
     }
@@ -470,6 +543,11 @@ function mainImpl()
 
         if (load.left || load.right || load.top || load.bottom) 
 	{
+	    //Everything in cache now.
+	    Game.room.map.generate();
+	    outside = 1; //always 1 in this function.
+	    
+	    /*
 	    if (inCache(world_stats)) {
 		//console.log("got lands in cache");
 		Game.room.map.generate();
@@ -480,6 +558,7 @@ function mainImpl()
 		var slice = getWorldSlice(world_stats.x_coord, world_stats.y_coord);
 		socket.emit("slice", {slice:slice});
 	    }
+	    */
 	}
 	
 	return outside;
@@ -508,9 +587,10 @@ function mainImpl()
 	}
     }
 
-    Game.tileInfoString = function(tile)
+    Game.tileInfoString = function(x, y, type)
     {
-	var str = terrainFromType(tile.type) + " " + tile.x + "|" + tile.y;
+	var str = terrainFromType(type) + " " + x + "|" + y;
+	/* fix later
 	if (tile.building)
 	{
 	    str = str + " " + tile.building;
@@ -519,7 +599,7 @@ function mainImpl()
 	{
 	    str = str + "(constructing)";
 	}
-
+	*/
 	return str;
     }
 
@@ -553,15 +633,17 @@ function mainImpl()
 
 	var hex = getSelectedHexagon(px, py, Game.world_stats.x_coord, Game.world_stats.y_coord);
 	//console.log("clicked hex", hex.x, hex.y);
-	var tile = cacheGetItem(hex.x, hex.y);
-	Game.world_stats.x_marked = tile.x;
-	Game.world_stats.y_marked = tile.y;
+	
+	Game.world_stats.x_marked = hex.x;
+	Game.world_stats.y_marked = hex.y;
+	terrain = cacheGetItem(hex.x, hex.y);
 
 	//Info on top menu
-	addTopMenu(topContext, Game.tileInfoString(tile), 500, 20);
+	addTopMenu(topContext, Game.tileInfoString(hex.x, hex.y, terrain), 500, 20);
 
 	//Change bottom menu
-	Game.clickedChangeMenu(tile);
+	//zzz Fix this 
+	//Game.clickedChangeMenu(tile);
 	
 	if (editorMode) 
 	{
@@ -843,6 +925,7 @@ function buildWorld(lands)
     return world;
 }
 
+/* not used now, everything is in cache
 function inCache(world_stats) {
     var tile;
 
@@ -865,6 +948,7 @@ function inCache(world_stats) {
     
     return 1;
 }
+*/
 
 function getRoomWidth()
 {
@@ -987,7 +1071,7 @@ function setupSystem(editor)
     }
 
     //Init client cache
-    cacheInit();
+    //cacheInit();
  
     //Mouse down event
     my_canvas.addEventListener("mousedown", doMouseDown, false);

@@ -672,7 +672,7 @@ function onSlice(client, data) {
 	});
     */
 };
-#test change
+
 function onWorld(client, data) {
     console.log("onWorld from " + client.name);
     client.emit("world", worldMatrix);

@@ -46,7 +46,7 @@ var setEventHandlers = function() {
     socket.on("connect", onSocketConnect);
     socket.on("disconnect", onSocketDisconnect);
     socket.on("hello", onHello);
-    socket.on("lands", onLands);
+    //socket.on("lands", onLands);
     socket.on("world", onWorld);    
     socket.on("build", onBuild);
     socket.on("error_msg", onError);
@@ -90,9 +90,9 @@ function onHello(data)
 	setCookie("username", loginData.name, 7);
 	Game.world_stats.x_coord = data.x_home;
 	Game.world_stats.y_coord = data.y_home;
-	var slice = getWorldSlice(Game.world_stats.x_coord, Game.world_stats.y_coord);
+	//var slice = getWorldSlice(Game.world_stats.x_coord, Game.world_stats.y_coord);
 	setupSystem(data.editor);
-	socket.emit("slice", {slice:slice});
+	//socket.emit("slice", {slice:slice});
 	
 	socket.emit("world");
     }
@@ -104,17 +104,21 @@ function onHello(data)
     }
 };
 
+/*
 function onLands(data)
 {
     console.log("onLands, number of lands:", data.length);
     cacheAddNew(data);
-    drawMap();
+    //drawMap();
 };
+*/
 
 function onWorld(data)
 {
     console.log("onWorld");
+    //alert(data);
     cacheAddWorld(data);
+    drawMap();
 };
 
 function onBuild(data)

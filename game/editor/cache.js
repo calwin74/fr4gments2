@@ -2,9 +2,10 @@
  Data model is the same as on server side.
 */
 
-var cache = null;
+//var cache = null;
 var matrix = null;
 
+/*
 function cacheInit()
 {
     //Initiate TaffyDB
@@ -24,6 +25,7 @@ function cacheGetItem(x, y)
     var items = cache({x:x, y:y}).get();
     return items[0];
 }
+*/
 
 function cacheUpdateBuilding(x, y, building, constructing, removing)
 {
@@ -34,14 +36,22 @@ function cacheAddUnit(x, y, unit, owner, hp, dp, ap)
 {
     cache({x:x, y:y}).update({unit:unit, unitOwner:owner, unitHp:hp, unitDp:dp, unitAp:ap});
 }
-
+/*
 function cacheDump()
 {
     var items = cache().get();
     console.log(items);
 }
+*/
 
+//Matrix impl
 function cacheAddWorld(world)
 {
     matrix = world;
+}
+
+function cacheGetItem(x, y)
+{
+    var item = matrix[x][y];
+    return item;
 }
