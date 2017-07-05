@@ -58,6 +58,7 @@ function clickedMenuItem(px, py)
 	item = menu[i];
 	if (insideBox(item, px, py))
 	{
+	    console.log("inside box");
 	    handleMenuItem(item);
 	    break;
 	}
@@ -149,6 +150,17 @@ function addFactoryMenu(ctx)
     initBottomMenu(ctx, "Factory Menu");
 
     addMenuItem(MENU_ITEM_1, 50, 100, 100, imgMap['artillery_com'], "artillery");
+
+    drawMenu(ctx);
+}
+
+function addBuildingUnitMenu(building, unit, ctx)
+{
+    var string = building + ' ' + unit;
+    initBottomMenu(ctx, string);
+
+    addMenuItem(MENU_ITEM_1, 50, 100, 100, imgMap['factory_com'], "building_choice");
+    addMenuItem(MENU_ITEM_2, 50, 100, 100, imgMap['soldier_com'], "unit_choice");
 
     drawMenu(ctx);
 }

@@ -10,24 +10,24 @@ var socket;
 var connections = new Array();
 
 //2D Array to hold world matrix. Fix this...
-var worldMatrix = new Array(101);
+//var worldMatrix = new Array(101);
 
 //Array hold all users
 var users = new Array();
 
 //Map holding all building types. Type is key.
-var buildingTypeMap = new Object();
+//var buildingTypeMap = new Object();
 
 //Map holding all unit types. Type is key.
-var unitTypeMap = new Object();
+//var unitTypeMap = new Object();
 
 //Map holding all units. x_y is key
 //zzz remove
-var unitMap = new Object();
+//var unitMap = new Object();
 
 //Map holding all buildings. x_y is key.
 //zzz Remove
-var buildingMap = new Object();
+//var buildingMap = new Object();
 
 //Globals ...
 
@@ -89,7 +89,7 @@ function init() {
         console.log("mysql: ", results[0]);    
     });
 
-    createMatrix(worldMatrix);
+    //cache.createWorldMatrix(worldSize);
 
     cacheData();
 
@@ -98,6 +98,7 @@ function init() {
 };
 
 //Allocate wordMatrix
+/*
 function createMatrix(worldMatrix)
 {
     var size = worldMatrix.length;
@@ -108,6 +109,7 @@ function createMatrix(worldMatrix)
 	worldMatrix[i] = new Array(size);
     }
 }
+*/
 
 function cacheData()
 {
@@ -143,6 +145,7 @@ function addUsers(rows) {
     initUsers = 1;
 }
 
+/*
 function createBuilding(row) {
     var building = {};
     
@@ -153,36 +156,40 @@ function createBuilding(row) {
     building.removing = row.removing;
     return building;
 }
+*/
 
 function addBuildings(rows)
 {
     for (var i in rows) {
 	var row = rows[i];
-	var building = createBuilding(row);
-	buildingMap[createKey(building.x, building.y)] = building;
-	cache.updateBuilding(row.x, row.y, row.type, row.constructing, row.removing);
+	var building = cache.createBuilding(row);
+	cache.addBuilding(building);
+	//buildingMap[createKey(building.x, building.y)] = building;
+	//cache.updateBuilding(row.x, row.y, row.type, row.constructing, row.removing);
     }
 
     console.log("--- buildings ---");
-    for (var i in buildingMap) {
-        console.log(buildingMap[i].type + " " + buildingMap[i].x + " " + buildingMap[i].y);
-    }
-
+    cache.printBuildings();
     db.getUnits(addUnits);
 }
 
 function addLands(rows)
 {
+    var n_rows = rows.length;
+    var world_size = Math.sqrt(n_rows);
+    cache.createWorldMatrix(world_size);
+
     for (var i in rows) {
 	var row = rows[i];
-	cache.addLand(row.x, row.y, row.type, row.owner);
-	
-	worldMatrix[row.x][row.y] = row.type;
+	//cache.addLand(row.x, row.y, row.type, row.owner);
+	cache.addLand(row.x, row.y, row.type);
+	//worldMatrix[row.x][row.y] = row.type;
     }
     console.log("Cached " + cache.getSize() + " land tiles.");
     db.getBuildings(addBuildings);    
 }
 
+/*
 function createBuildingTypes(row) {
     var building = {};
     
@@ -192,21 +199,27 @@ function createBuildingTypes(row) {
     building.time = row.time;
     return building;
 }
+*/
 
 function addBuildingTypes(rows) {
     for (var i in rows) {
-        var buildingType = createBuildingTypes(rows[i]);
-	buildingTypeMap[rows[i].type] = buildingType;
+        var buildingType = cache.createBuildingType(rows[i]);
+	cache.addBuildingType(buildingType, rows[i].type);
+	//buildingTypeMap[rows[i].type] = buildingType;
         //buildingTypes.push(building);
     }
 
     console.log("--- building types ---");
+    cache.printBuildingTypes();
+    /*
     for (var i in buildingTypeMap) {
         console.log(buildingTypeMap[i].type + " " + buildingTypeMap[i].gold + " " + buildingTypeMap[i].energy + " " + buildingTypeMap[i].time);
     }
+    */
     initBuildingTypes = 1;
 }
 
+/*
 function createUnitType(row) {
     var unit = {};
     
@@ -223,20 +236,26 @@ function createUnitType(row) {
 
     return unit;
 }
-
+*/
 function addUnitTypes(rows) {
     for (var i in rows) {
-        var unitType = createUnitType(rows[i]);
-	unitTypeMap[rows[i].type] = unitType;
+        var unitType = cache.createUnitType(rows[i]);
+	//unitTypeMap[rows[i].type] = unitType;
+	cache.addUnitType(unitType, rows[i].type);
     }
 
     console.log("--- unit types ---");
+    
+    cache.printUnitTypes();
+    /*
     for (var i in unitTypeMap) {
         console.log(unitTypeMap[i].type + " " + unitTypeMap[i].gold + " " + unitTypeMap[i].energy + " " + unitTypeMap[i].time);
     }
+    */
     initUnitTypes = 1;
 }
 
+/*
 function createUnit(row) {
     var unit = {};
     
@@ -250,26 +269,30 @@ function createUnit(row) {
 
     return unit;
 }
-
+*/
+/*
 function createKey(x, y) {
     var key = x + "_" + y;
     return key;
 }
-
+*/
 function addUnits(rows){
     for (var i in rows) {
-	var row = rows[i];
 	//zzz unitMap really needed?
-        var unit = createUnit(row);
-	unitMap[createKey(unit.x, unit.y)] = unit;
-	var unitType = unitTypeMap[row.type];
-	cache.updateUnit(row.x, row.y, row.type, row.name, unitType.hp, unitType.ap, unitType.dp);
+        var unit = cache.createUnit(rows[i]);
+	cache.addUnit(unit);
+	//unitMap[createKey(unit.x, unit.y)] = unit;
+	//var unitType = unitTypeMap[row.type];
+	//cache.updateUnit(row.x, row.y, row.type, row.name, unitType.hp, unitType.ap, unitType.dp);
     }
 
     console.log("--- units ---");
+    cache.printUnits();
+    /*
     for (var i in unitMap) {
         console.log(unitMap[i].type + " " + unitMap[i].x + " " + unitMap[i].y + " " + unitMap[i].owner);
     }
+    */
 
     //Init lands done.
     initLands = 1;
@@ -675,7 +698,11 @@ function onSlice(client, data) {
 
 function onWorld(client, data) {
     console.log("onWorld from " + client.name);
-    client.emit("world", worldMatrix);
+    var world = {};
+    world.worldMatrix = cache.getWorldMatrix();
+    world.buildings = cache.getBuildings();
+    world.units = cache.getUnits();
+    client.emit("world", world);
 };
 
 function onClientDisconnect(client) {
@@ -734,8 +761,11 @@ function onBuild(client, data) {
     console.log("onBuild " + data.coord.x + " " + data.coord.y);
 
     //Check cache if building already exists.
-    var item = cache.getItem(data.coord.x, data.coord.y);
-    if (item.building) {
+    var building = cache.getBuilding(data.coord.x, data.coord.y);
+    //var item = cache.getItem(data.coord.x, data.coord.y);
+    //if (item.building) {
+    if (building)
+    {
 	var msg = "Building already exists here (" + data.coord.x + "," + data.coord.y + ").";
 	sendError(client.name, msg);
 	console.log(msg);
@@ -859,7 +889,8 @@ function sendCivilians(name, civilians) {
 function verifyBuild(resource, name, build, coord) {
     var gold = resource[0].gold;
     var energy = resource[0].energy;
-    var building = buildingTypeMap[build];
+    //var building = buildingTypeMap[build];
+    var building = cache.getBuildingType(build);
     var new_gold = gold - building.gold;
     var new_energy = energy - building.energy;
 

@@ -117,7 +117,11 @@ function onWorld(data)
 {
     console.log("onWorld");
     //alert(data);
-    cacheAddWorld(data);
+    cacheAddWorld(data.worldMatrix);
+    cacheAddBuildings(data.buildings);
+    cachePrintBuildings();
+    cacheAddUnits(data.units);
+    cachePrintUnits();
     drawMap();
 };
 

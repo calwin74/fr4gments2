@@ -214,9 +214,28 @@ var bottomContext;
 	//this.image = null;
     }
 
-    function drawHex(c, x0, y0, fColor, text, terrain, marked)
+    function drawHex(c, x0, y0, fColor, text, terrain, building, unit, marked)
     {
 	var image;
+
+	if (building)
+	{
+	    //console.log("found building");
+	    cachePrintBuilding(building);
+	    if (building.constructing === 1)
+	    {
+		image = imgMap['concrete'];
+	    }
+	    else
+	    {
+		image = imgMap[building.type];
+	    }
+	}
+	else
+	{
+	    var str = terrainFromType(terrain);
+	    image = imgMap[str];
+	}
 
 	/*
 	if (tile.construct === 1)
@@ -233,11 +252,16 @@ var bottomContext;
 	    image = imgMap[str];
 	}
 	*/
-	var str = terrainFromType(terrain);
+	//var str = terrainFromType(terrain);
 	//zzz cache with a numeric key?
-	image = imgMap[str];
+	//image = imgMap[str];
 
 	c.drawImage(image, x0, y0 - y_offset, size, size);
+	if (unit)
+	{
+	    unitImage = imgMap[unit.type];
+	    c.drawImage(unitImage, x0 + 50, y0 - y_offset + 50, 100, 100);
+	}
 
 	/*
 	if (tile.unit)
@@ -369,10 +393,12 @@ var bottomContext;
 		var x = col + world_stats.x_coord;
 		var y = row + world_stats.y_coord;
 		var terrain = cacheGetItem(x, y);
+		var building = cacheGetBuilding(x,y);
+		var unit = cacheGetUnit(x,y);
 		posy = row * 2 * hexagon.r;
 		posx = col * (hexagon.s + hexagon.h);
 		coord = "(" + x + "," + y + ")";
-		drawHex(ctx, posx , posy, "red", coord, terrain, isMarked(x, y, world_stats));
+		drawHex(ctx, posx , posy, "red", coord, terrain, building, unit, isMarked(x, y, world_stats));
 	    }
 
 	    for (var col = 1; col < columns; col = col + 2) 
@@ -380,10 +406,12 @@ var bottomContext;
 		var x = col + world_stats.x_coord;
 		var y = row + world_stats.y_coord + mod;
 		var terrain = cacheGetItem(x, y);
+		var building = cacheGetBuilding(x,y);
+		var unit = cacheGetUnit(x,y);
 		posy = hexagon.r + row * 2 * hexagon.r;
 		posx = col * (hexagon.s + hexagon.h);
 		coord = "(" + x + "," + y + ")";
-		drawHex(ctx, posx , posy, "red", coord, terrain, isMarked(x, y, world_stats));
+		drawHex(ctx, posx , posy, "red", coord, terrain, building, unit, isMarked(x, y, world_stats));
 	    }
 	}
     }
@@ -603,19 +631,19 @@ function mainImpl()
 	return str;
     }
 
-    Game.clickedChangeMenu = function(tile)
+    Game.clickedChangeMenu = function(building)
     {
-	if (tile.building)
+	if (building)
 	{
-	    if (tile.building === 'cityhall')
+	    if (building.type === 'cityhall')
 	    {
 		addCityhallMenu(bottomContext);
 	    }
-	    else if (tile.building === 'factory')
+	    else if (building.type === 'factory')
 	    {
 		addFactoryMenu(bottomContext);
 	    }
-	    else if (tile.building === 'barrack')
+	    else if (building.type === 'barrack')
             {
 		addBarrackMenu(bottomContext);
 	    }
@@ -641,9 +669,25 @@ function mainImpl()
 	//Info on top menu
 	addTopMenu(topContext, Game.tileInfoString(hex.x, hex.y, terrain), 500, 20);
 
-	//Change bottom menu
-	//zzz Fix this 
-	//Game.clickedChangeMenu(tile);
+	var building = cacheGetBuilding(hex.x, hex.y);
+	var unit = cacheGetUnit(hex.x, hex.y);
+	if (unit == null && building != null)
+	{
+	    Game.clickedChangeMenu(building);
+	}
+	else if (unit != null && building == null)
+	{
+	    alert("unit clicked but not handled");
+	}
+	else if (unit != null && building != null)
+	{
+	    addBuildingUnitMenu(building.type, unit.type, bottomContext)
+	}
+	else
+	{
+	    addEmptyMenu(bottomContext);
+	}
+	//else no building or unit.
 	
 	if (editorMode) 
 	{
