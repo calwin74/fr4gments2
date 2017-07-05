@@ -3,7 +3,6 @@ var TAFFY = require('node-taffydb').TAFFY;
 */
 require("nice-console")(console)
 
-//stupid test...
 
 //var cache = new TAFFY();
 
